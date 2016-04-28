@@ -1,0 +1,61 @@
+;; gorilla-repl.fileformat = 1
+
+;; **
+;;; # Gorilla REPL
+;;; 
+;;; Welcome to gorilla :-)
+;;; 
+;;; Shift + enter evaluates code. Hit ctrl+g twice in quick succession or click the menu icon (upper-right corner) for more commands ...
+;;; 
+;;; It's a good habit to run each worksheet in its own namespace: feel free to use the declaration we've provided below if you'd like.
+;; **
+
+;; @@
+(ns gorilla-calls-gyptis
+  (:require [gorilla-repl.vega :refer [vega-view]]
+            [gyptis.core :as gplot]
+            [clojure.data.json :as json]))
+
+(def fib-data [{:x "n=2", :y 1 :fill "n-1"}
+           {:x "n=2", :y 0 :fill "n-2"}
+           {:x "n=3", :y 1 :fill "n-1"}
+           {:x "n=3", :y 1 :fill "n-2"}
+           {:x "n=4", :y 2 :fill "n-1"}
+           {:x "n=4", :y 1 :fill "n-2"}
+           {:x "n=5", :y 3 :fill "n-1"}
+           {:x "n=5", :y 2 :fill "n-2"}
+           {:x "n=6", :y 5 :fill "n-1"}
+           {:x "n=6", :y 3 :fill "n-2"}])
+
+
+;; @@
+;; =>
+;;; {"type":"html","content":"<span class='clj-var'>#&#x27;gorilla-calls-gyptis/fib-data</span>","value":"#'gorilla-calls-gyptis/fib-data"}
+;; <=
+
+;; @@
+
+(def vega-plot-spec (gplot/stacked-bar fib-data))
+
+;; try pasting the result into the vega viewer:
+;; http://vega.github.io/vega-editor/
+(print (json/write-str vega-plot-spec))
+;; @@
+;; ->
+;;; {&quot;legends&quot;:[{&quot;fill&quot;:&quot;fill&quot;}],&quot;axes&quot;:[{&quot;type&quot;:&quot;x&quot;,&quot;scale&quot;:&quot;x&quot;},{&quot;type&quot;:&quot;y&quot;,&quot;scale&quot;:&quot;y&quot;}],&quot;width&quot;:600,&quot;scales&quot;:[{&quot;name&quot;:&quot;x&quot;,&quot;type&quot;:&quot;ordinal&quot;,&quot;domain&quot;:[&quot;n=2&quot;,&quot;n=3&quot;,&quot;n=4&quot;,&quot;n=5&quot;,&quot;n=6&quot;],&quot;range&quot;:&quot;width&quot;},{&quot;name&quot;:&quot;y&quot;,&quot;type&quot;:&quot;linear&quot;,&quot;domain&quot;:{&quot;data&quot;:&quot;stats&quot;,&quot;field&quot;:&quot;sum_y&quot;},&quot;range&quot;:&quot;height&quot;,&quot;round&quot;:true,&quot;nice&quot;:true},{&quot;name&quot;:&quot;fill&quot;,&quot;type&quot;:&quot;ordinal&quot;,&quot;domain&quot;:{&quot;data&quot;:&quot;table&quot;,&quot;field&quot;:&quot;fill&quot;},&quot;range&quot;:&quot;category20&quot;}],&quot;padding&quot;:{&quot;top&quot;:50,&quot;left&quot;:100,&quot;bottom&quot;:100,&quot;right&quot;:50},&quot;marks&quot;:[{&quot;type&quot;:&quot;rect&quot;,&quot;from&quot;:{&quot;data&quot;:&quot;table&quot;,&quot;transform&quot;:[{&quot;type&quot;:&quot;stack&quot;,&quot;groupby&quot;:[&quot;x&quot;],&quot;field&quot;:&quot;y&quot;}]},&quot;properties&quot;:{&quot;update&quot;:{&quot;x&quot;:{&quot;scale&quot;:&quot;x&quot;,&quot;field&quot;:&quot;x&quot;},&quot;width&quot;:{&quot;scale&quot;:&quot;x&quot;,&quot;band&quot;:true,&quot;offset&quot;:-1},&quot;y&quot;:{&quot;scale&quot;:&quot;y&quot;,&quot;field&quot;:&quot;layout_start&quot;},&quot;y2&quot;:{&quot;scale&quot;:&quot;y&quot;,&quot;field&quot;:&quot;layout_end&quot;},&quot;fill&quot;:{&quot;scale&quot;:&quot;fill&quot;,&quot;field&quot;:&quot;fill&quot;},&quot;stroke&quot;:{&quot;value&quot;:&quot;white&quot;},&quot;strokeWidth&quot;:{&quot;value&quot;:1}}}}],&quot;signals&quot;:[],&quot;height&quot;:600,&quot;data&quot;:[{&quot;name&quot;:&quot;table&quot;,&quot;values&quot;:[{&quot;x&quot;:&quot;n=2&quot;,&quot;y&quot;:1,&quot;fill&quot;:&quot;n-1&quot;},{&quot;x&quot;:&quot;n=2&quot;,&quot;y&quot;:0,&quot;fill&quot;:&quot;n-2&quot;},{&quot;x&quot;:&quot;n=3&quot;,&quot;y&quot;:1,&quot;fill&quot;:&quot;n-1&quot;},{&quot;x&quot;:&quot;n=3&quot;,&quot;y&quot;:1,&quot;fill&quot;:&quot;n-2&quot;},{&quot;x&quot;:&quot;n=4&quot;,&quot;y&quot;:2,&quot;fill&quot;:&quot;n-1&quot;},{&quot;x&quot;:&quot;n=4&quot;,&quot;y&quot;:1,&quot;fill&quot;:&quot;n-2&quot;},{&quot;x&quot;:&quot;n=5&quot;,&quot;y&quot;:3,&quot;fill&quot;:&quot;n-1&quot;},{&quot;x&quot;:&quot;n=5&quot;,&quot;y&quot;:2,&quot;fill&quot;:&quot;n-2&quot;},{&quot;x&quot;:&quot;n=6&quot;,&quot;y&quot;:5,&quot;fill&quot;:&quot;n-1&quot;},{&quot;x&quot;:&quot;n=6&quot;,&quot;y&quot;:3,&quot;fill&quot;:&quot;n-2&quot;}]},{&quot;name&quot;:&quot;stats&quot;,&quot;source&quot;:&quot;table&quot;,&quot;transform&quot;:[{&quot;type&quot;:&quot;aggregate&quot;,&quot;groupby&quot;:[&quot;x&quot;],&quot;summarize&quot;:[{&quot;field&quot;:&quot;y&quot;,&quot;ops&quot;:[&quot;sum&quot;]}]}]}]}
+;; <-
+;; =>
+;;; {"type":"html","content":"<span class='clj-nil'>nil</span>","value":"nil"}
+;; <=
+
+;; @@
+;; Confused why this doesn't give me a plot, but instead it prints the vega JSON spec?
+(vega-view vega-plot-spec)
+;; @@
+;; =>
+;;; {"type":"vega","content":{"legends":[{"fill":"fill"}],"axes":[{"type":"x","scale":"x"},{"type":"y","scale":"y"}],"width":600,"scales":[{"name":"x","type":"ordinal","domain":["n=2","n=3","n=4","n=5","n=6"],"range":"width"},{"name":"y","type":"linear","domain":{"data":"stats","field":"sum_y"},"range":"height","round":true,"nice":true},{"name":"fill","type":"ordinal","domain":{"data":"table","field":"fill"},"range":"category20"}],"padding":{"top":50,"left":100,"bottom":100,"right":50},"marks":[{"type":"rect","from":{"data":"table","transform":[{"type":"stack","groupby":["x"],"field":"y"}]},"properties":{"update":{"x":{"scale":"x","field":"x"},"width":{"scale":"x","band":true,"offset":-1},"y":{"scale":"y","field":"layout_start"},"y2":{"scale":"y","field":"layout_end"},"fill":{"scale":"fill","field":"fill"},"stroke":{"value":"white"},"strokeWidth":{"value":1}}}}],"signals":[],"height":600,"data":[{"name":"table","values":[{"x":"n=2","y":1,"fill":"n-1"},{"x":"n=2","y":0,"fill":"n-2"},{"x":"n=3","y":1,"fill":"n-1"},{"x":"n=3","y":1,"fill":"n-2"},{"x":"n=4","y":2,"fill":"n-1"},{"x":"n=4","y":1,"fill":"n-2"},{"x":"n=5","y":3,"fill":"n-1"},{"x":"n=5","y":2,"fill":"n-2"},{"x":"n=6","y":5,"fill":"n-1"},{"x":"n=6","y":3,"fill":"n-2"}]},{"name":"stats","source":"table","transform":[{"type":"aggregate","groupby":["x"],"summarize":[{"field":"y","ops":["sum"]}]}]}]},"value":"#gorilla_repl.vega.VegaView{:content {:legends [{:fill \"fill\"}], :axes [{:type \"x\", :scale \"x\"} {:type \"y\", :scale \"y\"}], :width 600, :scales [{:name \"x\", :type \"ordinal\", :domain [\"n=2\" \"n=3\" \"n=4\" \"n=5\" \"n=6\"], :range \"width\"} {:name \"y\", :type \"linear\", :domain {:data \"stats\", :field \"sum_y\"}, :range \"height\", :round true, :nice true} {:name \"fill\", :type \"ordinal\", :domain {:data \"table\", :field :fill}, :range \"category20\"}], :padding {:top 50, :left 100, :bottom 100, :right 50}, :marks [{:type \"rect\", :from {:data \"table\", :transform [{:type \"stack\", :groupby [:x], :field :y}]}, :properties {:update {:x {:scale \"x\", :field :x}, :width {:scale \"x\", :band true, :offset -1}, :y {:scale \"y\", :field \"layout_start\"}, :y2 {:scale \"y\", :field \"layout_end\"}, :fill {:scale \"fill\", :field :fill}, :stroke {:value \"white\"}, :strokeWidth {:value 1}}}}], :signals [], :height 600, :data [{:name \"table\", :values [{:x \"n=2\", :y 1, :fill \"n-1\"} {:x \"n=2\", :y 0, :fill \"n-2\"} {:x \"n=3\", :y 1, :fill \"n-1\"} {:x \"n=3\", :y 1, :fill \"n-2\"} {:x \"n=4\", :y 2, :fill \"n-1\"} {:x \"n=4\", :y 1, :fill \"n-2\"} {:x \"n=5\", :y 3, :fill \"n-1\"} {:x \"n=5\", :y 2, :fill \"n-2\"} {:x \"n=6\", :y 5, :fill \"n-1\"} {:x \"n=6\", :y 3, :fill \"n-2\"}]} {:name \"stats\", :source \"table\", :transform [{:type \"aggregate\", :groupby [:x], :summarize [{:field :y, :ops [\"sum\"]}]}]}]}}"}
+;; <=
+
+;; @@
+
+;; @@
